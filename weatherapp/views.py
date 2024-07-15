@@ -3,12 +3,12 @@ import requests
 from django.contrib import messages
 from decouple import config
 
+API_key=config("API_key")
 
 
 
 
 def get_weather_data(city_name):
-    API_key=config("API_key")
     url=f'https://api.openweathermap.org/data/2.5/weather?q={city_name}&appid={API_key}'
     response=requests.get(url)
     if response.status_code==200:
@@ -30,7 +30,6 @@ def index(request):
     if request.method=='POST':
         city=request.POST.get('city')
         weather_data=get_weather_data(city)
-        print(weather_data)
         if weather_data is not None:
            
             icon=weather_data['weather'][0]['icon']
@@ -53,4 +52,4 @@ def index(request):
             return redirect('/')
 
    
-    return render(request,'index.html')
+    return render(request,'index.html',{'api_key':API_key})
