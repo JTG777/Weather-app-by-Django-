@@ -43,13 +43,15 @@ def index(request):
                 'description':description,
                 'temperature':temperature,
                 'city':city_name,
-                'country':country
+                'country':country,
+                'api_key':API_key
+
             }
             return render(request,'index.html',context)
         
         else:
             messages.error(request,"The city you have searched is invalid")
-            return redirect('/')
+            return redirect('index')
 
    
     return render(request,'index.html',{'api_key':API_key})
